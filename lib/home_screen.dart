@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myapp/feedback_screen.dart';
-import 'package:myapp/exhibits_screen.dart';
-import 'package:myapp/navigation_screen.dart';
-import 'package:myapp/profile_screen.dart';
-// For continue planning screen
+import 'exhibits_screen.dart';
+import 'navigation_screen.dart';
+import 'profile_screen.dart';
+import 'feedback_screen.dart'; // For the feedback screen
+ // For continue planning screen
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,10 +25,11 @@ class _HomeScreenState extends State<HomeScreen> {
   };
   
   /// Intercepts the back button press:
-  /// - If the current tab's navigator can pop, it pops.
-  /// - Otherwise, if not on Home (index 0), it switches to Home.
+  /// - If current tab's navigator can pop, it pops;
+  /// - Otherwise, if not on Home (index 0), it switches to Home;
+  /// - Otherwise, the system handles the back (exiting the app).
   Future<bool> _onWillPop() async {
-    final currentNavigator = _navigatorKeys[_selectedIndex]!.currentState;
+    final currentNavigator = _navigatorKeys[_selectedIndex]?.currentState;
     if (currentNavigator != null && currentNavigator.canPop()) {
       currentNavigator.pop();
       return false;
@@ -41,12 +42,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return true;
   }
   
-  /// When a bottom navigation item is tapped:
+  /// When a bottom nav item is tapped:
   /// - If it’s the current tab, pop to the first route.
   /// - Otherwise, switch to that tab.
   void _onNavigationItemSelected(int index) {
     if (index == _selectedIndex) {
-      _navigatorKeys[index]!.currentState!.popUntil((route) => route.isFirst);
+      _navigatorKeys[index]?.currentState?.popUntil((route) => route.isFirst);
     } else {
       setState(() {
         _selectedIndex = index;
@@ -100,23 +101,30 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: const Color(0xFF2E3192),
           elevation: 4,
           actions: [
-            // Feedback icon in the app bar.
+            // Feedback icon in the app bar: pushes FeedbackScreen on the root navigator.
             IconButton(
               icon: const Icon(Icons.feedback_outlined),
               onPressed: () {
-                Navigator.push(
-                  context,
+                Navigator.of(context, rootNavigator: true).push(
                   MaterialPageRoute(builder: (context) => const FeedbackScreen()),
                 );
               },
             ),
+            // Notifications icon (placeholder).
+            IconButton(
+              icon: const Icon(Icons.notifications_outlined),
+              onPressed: () {
+                // Add your notification action here.
+              },
+            ),
+            // Profile icon that switches to Profile tab.
             IconButton(
               icon: const CircleAvatar(
                 backgroundImage: AssetImage('assets/profile_placeholder.png'),
               ),
               onPressed: () {
                 setState(() {
-                  _selectedIndex = 3; // Switch to Profile tab.
+                  _selectedIndex = 3;
                 });
               },
             ),
@@ -146,7 +154,8 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: const Color(0xFF2E3192),
           onPressed: () {
-            Navigator.pushNamed(context, '/ai_chat');
+            // Navigate to the AI Chat screen using the root navigator.
+            Navigator.of(context, rootNavigator: true).pushNamed('/ai_chat');
           },
           child: const Icon(Icons.assistant_outlined, color: Colors.white),
         ),
@@ -155,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-/// This widget displays the content for the Home tab.
+/// This widget displays the main content on the Home tab.
 class HomeContent extends StatelessWidget {
   const HomeContent({super.key});
   
@@ -300,8 +309,9 @@ class HomeContent extends StatelessWidget {
                   side: const BorderSide(color: Color(0xFF2E3192)),
                 ),
               ),
+              // Start New Tour navigates to ExhibitsScreen (booking a tour)
               onPressed: () {
-                Navigator.pushNamed(context, '/explore');
+                Navigator.of(context, rootNavigator: true).pushNamed('/explore');
               },
               icon: const Icon(Icons.add_location_alt_outlined),
               label: const Text('Start New Tour'),
@@ -319,8 +329,9 @@ class HomeContent extends StatelessWidget {
                   side: const BorderSide(color: Color(0xFF2E3192)),
                 ),
               ),
+              // Continue Planning navigates to TourPlannerScreen
               onPressed: () {
-                Navigator.pushNamed(context, '/tours');
+                Navigator.of(context, rootNavigator: true).pushNamed('/tours');
               },
               icon: const Icon(Icons.edit_calendar_outlined),
               label: const Text('Continue Planning'),
@@ -430,7 +441,7 @@ class HomeContent extends StatelessWidget {
         Center(
           child: ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/crowd_status');
+              Navigator.of(context, rootNavigator: true).pushNamed('/crowd_status');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF2E3192),

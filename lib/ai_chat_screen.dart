@@ -36,6 +36,7 @@ Your responses should be comprehensive, culturally respectful, and technically a
 You talk only of Emirates Arabic United (EAU) museums and artifacts there only
 Always ensure that your tone is polite, informative, and engaging. Provide clear, step-by-step explanations as needed and address any technical or cultural aspects relevant to the query.
 User query:
+Also dont write greetings everytime, only the first time when the user prompts you, from there is normal conversation no greetings unless user asked for it, also try to minimise your conversation to 100 characters per conversation
 """;
 
   @override
@@ -201,7 +202,7 @@ User query:
             }
           ],
           "generation_config": {
-            "maxOutputTokens": 60,
+            "maxOutputTokens": 110,
             "temperature": 0.7,
             "topP": 0.9
           }

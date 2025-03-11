@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:myapp/ai_chat_screen.dart';
-import 'package:myapp/crowd_status_screen.dart';
-import 'package:myapp/exhibits_screen.dart';
-import 'package:myapp/home_screen.dart';
-import 'package:myapp/login_screen.dart';
-import 'package:myapp/signup_screen.dart';
-import 'package:myapp/splash_screen.dart';
-import 'package:myapp/tour_planner_screen.dart';
-import 'package:myapp/navigation_screen.dart';
-import 'package:myapp/profile_screen.dart'; // Import the real ProfileScreen
+import 'package:virtualtourguideapp/ai_chat_screen.dart';
+import 'package:virtualtourguideapp/crowd_status_screen.dart';
+import 'package:virtualtourguideapp/exhibits_screen.dart';
+import 'package:virtualtourguideapp/home_screen.dart';
+import 'package:virtualtourguideapp/login_screen.dart';
+import 'package:virtualtourguideapp/signup_screen.dart';
+import 'package:virtualtourguideapp/splash_screen.dart';
+import 'package:virtualtourguideapp/tour_planner_screen.dart';
+import 'package:virtualtourguideapp/navigation_screen.dart';
+import 'package:virtualtourguideapp/profile_screen.dart'; // Import the real ProfileScreen
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await Hive.openBox('auth');
   await Hive.openBox('users');
-  await Hive.openBox('settings');
   runApp(const MyApp());
 }
 

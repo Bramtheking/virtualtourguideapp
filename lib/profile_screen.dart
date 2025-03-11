@@ -59,15 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
   
-  Future<void> _toggleTheme(bool value) async {
-    final settingsBox = Hive.box('settings');
-    setState(() {
-      isDarkTheme = value;
-    });
-    await settingsBox.put('isDarkTheme', value);
-    // Optionally, notify the app's theme provider to rebuild the UI.
-  }
-  
+ 
   void _toggleEditing() {
     setState(() {
       isEditing = !isEditing;
@@ -221,17 +213,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         _buildDetailCard(Icons.flag, "Country", countryController.text, isEditable: isEditing, controller: countryController),
                         const SizedBox(height: 30),
                         // Theme toggle
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Dark Theme", style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold, color: primaryPurple)),
-                            Switch(
-                              value: isDarkTheme,
-                              activeColor: accentGold,
-                              onChanged: (value) => _toggleTheme(value),
-                            ),
-                          ],
-                        ),
+                       
                         const SizedBox(height: 30),
                         // Logout button
                         Center(
